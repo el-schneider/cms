@@ -49,7 +49,7 @@ class UrlBuilder implements UrlBuilderContract
 
         $route = $this->convertToAntlers($route);
 
-        $url = Antlers::parse($route, $this->routeData());
+        $url = Antlers::parse($route, $this->routeData(), trusted: true);
 
         // Slugify it because we're dealing with URLs after all.
         $url = $this->slugify($url);

@@ -137,4 +137,24 @@ class UrlBuilderTest extends TestCase
         $this->assertEquals('/blog/post.aspx', $this->builder->build('/blog/{{ slug }}.aspx'));
         $this->assertEquals('/blog/post.foo.bar', $this->builder->build('/blog/{{ slug }}.foo.bar'));
     }
+
+    #[Test]
+    public function it_allows_modifiers_in_route_patterns()
+    {
+        $parent = tap(\Statamic\Facades\Entry::make()
+            ->id('parent-entry')
+            ->locale('en')
+            ->collection(
+                tap(\Statamic\Facades\Collection::make('parents'))->save()
+            )
+            ->slug('parent-slug')
+        )->save();
+
+        $this->assertEquals(
+            '/parent-slug/post',
+            $this->builder
+                ->merge(['parent' => $parent->toAugmentedArray()])
+                ->build("/{{ parent | get('slug') }}/{{ slug }}")
+        );
+    }
 }

@@ -1072,7 +1072,7 @@ class Entry implements Arrayable, ArrayAccess, Augmentable, BulkAugmentable, Con
             'url' => $this->url(),
             'permalink' => $this->absoluteUrl(),
             'locale' => $this->locale(),
-        ]));
+        ]), trusted: true);
     }
 
     public function repository()
